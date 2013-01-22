@@ -1,0 +1,10 @@
+function n=angle2pix(distance,pixelSize,ang)
+%ANGLE2PIX
+%n=angle2pix(display,ang)
+%returns width of square in pixels for visual angle ang
+
+%distance in cm
+%pixelsize in cm
+%n=round(2*distance*tan(ang*pi/360)/pixelSize);
+
+n=round(distance*tan(ang*pi/180)/pixelSize);
