@@ -1,0 +1,75 @@
+WinVis;
+WinVis('init')
+
+%screen
+
+[h v hsize vsize] = WinVis('GlobalsGet','hresolution','vresolution','hsize','vsize')
+
+% print 'h should be 640 and v should be 480 or vice versa'
+% h
+% v
+% print 'hsize and vsize should be cm/pix, maybe like .1 or something'
+% hsize
+% vsize
+% 
+% ellipse 
+%h = rectangle('Position',[0 0 10 10], 'Curvature', [1,1], 'FaceColor','black');
+
+%fixation 
+fix=zeros(v,h);
+fix(v/2-1:v/2+1,h/2-1:h/2+1)=ones(3,3);
+
+%blank
+blank= zeros(v,h);
+
+%degrees to pixels 
+L=64 %cm
+deg=1
+
+npix=angle2pix(L,hsize,deg);
+
+%Target Creation
+
+eheightdeg=6
+ewidthdeg=3.3
+
+eheight=(angle2pix(L,vsize,eheightdeg)/2);
+ewidth=(angle2pix(L,hsize,ewidthdeg)/2);
+
+target_right= ellipseMatrix(v/2, h/2+npix, eheight, ewidth, pi/2, blank, 1);
+
+target_left= ellipseMatrix(v/2, h/2-npix, eheight, ewidth, pi/2, blank, 1);
+
+%Trial creation
+
+WinVis('trial',1,4,[0 0],[v h])
+
+%Trial Types
+
+WinVis('Spatial',1,1,fix)
+
+WinVis('Spatial',1,2,blank)
+
+WinVis('Spatial',1,3,target_left)
+
+WinVis('Spatial',1,4,target_right)
+   
+WinVis('trialTemporal',1,1,[50 1 50 2 50 3 50 4]);
+WinVis('run',1,1);
+WinVis('exit');
+
+
+
+%LPT
+
+%if (WinVis('numberLPT') == 0), 
+    %WinVis('addLPT' , hex2dec('CF00'));
+%end
+
+%WinVis('putLPT', 0);
+    %WinVis('trialSetLPTOut' ,1, tLPT); 
+   
+
+
+
+ 
